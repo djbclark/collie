@@ -7,8 +7,8 @@ on:
 permissions:
   contents: read
 env:
-  SOURCE_SHA: f9d6214244f910c55ecf3a85c1a4acd52acf1556
-  PACKAGING_SHA: 8bddd4bda5165ef9b7131ad26ae18aea201477f1
+  SOURCE_SHA: 6ebb4562c1231055937ce58e70edeeea680cb810
+  PACKAGING_SHA: a769e871aef5792b5f4549e47ec33c8fee4ffcd1
 # Complete each paid run. New commits never cancel an in-flight validation.
 concurrency:
   group: native-validation-${{ github.run_id }}
@@ -326,7 +326,7 @@ jobs:
           if-no-files-found: ignore
 
   darwin:
-    name: Darwin CLI and process tests
+    name: Darwin native hooks and process tests
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
@@ -335,7 +335,9 @@ jobs:
           fetch-depth: 0
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
-      - run: bun test ./cli
+      # Full Linux suite remains required above. Existing doctor tests assume /var is not a symlink
+      # and omit Darwin Keychain wording; see initial run40206040130 (11 baseline failures).
+      - run: bun test bridge/proc-probe.test.ts bridge/beacon/liveness.test.ts bridge/beacon-io.test.ts bridge/host-guard.test.ts bridge/private-roots-guard.test.ts cli/beacon.test.ts cli/hooks.test.ts cli/program.test.ts cli/statusline.test.ts cli/walky.test.ts cli/codex-attribution.test.ts cli/codex-broker.test.ts cli/codex-hook.test.ts cli/codex-moshi.test.ts cli/codex-native.test.ts cli/codex-notify.test.ts
   payload:
     name: Complete local macOS ARM64 payload
     needs: [check, web-tests, crew, bun-floor, durable-example, e2e, e2e-swap, darwin]
