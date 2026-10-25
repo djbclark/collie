@@ -1,0 +1,12 @@
+name: Native Codex validation
+on:
+  push:
+    branches: [ci/codex-native-validation]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ready:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Fork validation runner registered; no source checks scheduled yet."
