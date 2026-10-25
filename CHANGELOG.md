@@ -23,6 +23,10 @@ Running a crew? Update the lead first; members follow on their own. Details:
 
 ## [Unreleased]
 
+## [1.24.1-local.f9d62142] - 2026-10-25
+
+> Local validation package for native Codex hooks, based on f9d62142. This is not an upstream release; no upstream tag or GitHub Release was published. Moshi dual approvals remain disabled.
+
 ### Added
 
 - **Codex's own hooks report to Collie, and can hold a permission for the phone.** `collie hooks install codex --native` registers `SessionStart`, `UserPromptSubmit`, `Stop`, `Interrupt` and `SessionEnd` in `~/.codex/hooks.json` as separate entries (your other hooks, `config.toml` and `notify` are not touched), `--hold-permissions` adds `PermissionRequest` and `PostToolUse`, and every entry runs the new `collie codex-hook`. A hook is placed on a pane only through its verified `codex` parent, never by folder. A hold beside Moshi's own `PermissionRequest` entry is refused, because Moshi's card is not withdrawn when Collie decides first (#595); `--with-moshi` builds a single broker that takes the first valid answer once and cancels the other, and stays off for every provider that has no recorded runtime proof of withdrawal, Moshi 0.4.37 included. Process start times now read through libproc on macOS for the bridge and the hooks alike.
