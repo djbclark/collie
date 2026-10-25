@@ -23,6 +23,10 @@ Running a crew? Update the lead first; members follow on their own. Details:
 
 ## [Unreleased]
 
+## [1.24.1-local.6ebb4562] - 2026-10-25
+
+Local validation package of native Codex hooks. This is not an upstream release; no tag or release is published.
+
 ## [1.24.0] - 2026-10-25
 
 ### Added
